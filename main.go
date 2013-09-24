@@ -12,6 +12,7 @@ import (
 )
 
 var token = flag.String("token", "", "Token to access github API")
+var message = flag.String("message", "Any update on this issue?", "Message will be posted")
 
 func main() {
 	flag.Usage = func() {
@@ -46,9 +47,8 @@ func main() {
 		return
 	}
 
-	message := "Any update on this issue?"
 	var comment github.IssueComment
-	comment.Body = &message
+	comment.Body = message
 	_, _, err = client.Issues.CreateComment(flag.Arg(0), flag.Arg(1), issue, &comment)
 	if err != nil {
 		log.Fatal(err)
